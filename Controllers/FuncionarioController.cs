@@ -21,6 +21,13 @@ namespace democrud.Controllers
             ServiceResponseModel<List<FuncionarioModel>> funcionarios = await _funcionarioInterface.GetFuncionarios();
             return Ok(funcionarios);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> CreateCliente([FromBody] FuncionarioModel dados)
+        {
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.CreateFuncionario(dados);
+            return Ok(response);
+        }
  
 
     }

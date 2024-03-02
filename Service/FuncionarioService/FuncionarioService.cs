@@ -51,9 +51,31 @@ namespace democrud.Service.FuncionarioService
 
         }
 
-        public Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario)
+        public async Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario)
         {
-            throw new NotImplementedException();
+            ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
+            try
+            {
+                if (novoFuncionario == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Dados inválidos";
+                    serviceResponse.Sucesso = false;
+                    return serviceResponse;
+                }
+
+                // salva no bd
+                _context.Funcionarios.Add(novoFuncionario);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Dados = novoFuncionario;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Sucesso = false;
+            }
+            return serviceResponse;
         }
 
         public Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario)

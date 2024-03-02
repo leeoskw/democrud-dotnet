@@ -23,6 +23,7 @@ Essa demo foi construída utilizando dotnet e as extensões do nuget:
 - Microsoft.EntityFrameworkCore.Design
 - Microsoft.EntityFrameworkCore.SqlServer
 - Microsoft.EntityFrameworkCore.Tools
+- FluentValidation
 
 <h3>Cloning</h3>
 
@@ -77,14 +78,28 @@ Note: This is a repository to be used as a reference and study. DB Connections, 
 **REQUEST**
 ```json
 {
-  "username": "fernandakipper",
-  "password": "4444444"
+	"nome": "Ellie The Cat",
+	"sobrenome" : "miau",
+	"departamento" : 2,
+	"ativo" : true,
+	"turno" : 1
 }
 ```
 
 **RESPONSE**
 ```json
 {
-  "token": "OwoMRHsaQwyAgVoc3OXmL1JhMVUYXGGBbCTK0GBgiYitwQwjf0gVoBmkbuyy0pSi"
+	"dados": {
+		"id": 1,
+		"nome": "Ellie The Cat",
+		"sobrenome": "miau",
+		"departamento": 2,
+		"ativo": true,
+		"turno": 1,
+		"dataDeCriacao": "2024-03-02T20:40:49.4549572-03:00",
+		"dataDeAlteracao": "2024-03-02T20:40:49.4549582-03:00"
+	},
+	"mensagem": "",
+	"sucesso": true
 }
 ```

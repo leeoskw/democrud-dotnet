@@ -1,4 +1,5 @@
 using democrud.DataContext;
+using democrud.Service.FuncionarioService;
 using Microsoft.EntityFrameworkCore;
 
 namespace democrud
@@ -21,6 +22,9 @@ namespace democrud
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            // injeção de dependência para a Service ser consumida através do controller
+            builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
 
             var app = builder.Build();
 
