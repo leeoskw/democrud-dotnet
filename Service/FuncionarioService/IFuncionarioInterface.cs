@@ -8,7 +8,7 @@ namespace democrud.Service.FuncionarioService
         Task<ServiceResponseModel<FuncionarioModel>> GetFuncionarioById(int idFuncionario);
         Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario);
         Task<ServiceResponseModel<FuncionarioModel>> UpdateFuncionario(FuncionarioModel editadoFuncionario);
-        Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario);
         Task<ServiceResponseModel<FuncionarioModel>> InativaFuncionario(int idFuncionario);
+        Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario);
     }
 }

@@ -36,12 +36,19 @@ namespace democrud.Controllers
             return Ok(response);
         }
 
-        //[HttpPut]
-        //public  async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> UpdateCliente([FromBody] FuncionarioModel dados) 
-        //{
-        //    ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.UpdateFuncionario(dados);
-        //    return Ok(response); 
-        //}
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> UpdateCliente([FromBody] FuncionarioModel dados)
+        {
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.UpdateFuncionario(dados);
+            return Ok(response);
+        }
+
+        [HttpPut("{idFuncionario}")]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> InativaFuncionario(int idFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.InativaFuncionario(idFuncionario);
+            return Ok(response);
+        }
     }
 
     

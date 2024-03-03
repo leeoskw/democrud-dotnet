@@ -1,5 +1,6 @@
 ﻿using democrud.DataContext;
 using democrud.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace democrud.Service.FuncionarioService
 {
@@ -84,28 +85,73 @@ namespace democrud.Service.FuncionarioService
             return serviceResponse;
         }
 
-        //public async Task<ServiceResponseModel<FuncionarioModel>> UpdateFuncionario(FuncionarioModel editadoFuncionario)
-        //{
-        //    ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
-        //    try
-        //    {
-        //        serviceResponse.Dados = editadoFuncionario;
-        //        serviceResponse.Dados.DataDeAlteracao = DateTime.Now.ToLocalTime();
-        //        serviceResponse.Mensagem = "Dados alterados com sucesso!";
+        public async Task<ServiceResponseModel<FuncionarioModel>> UpdateFuncionario(FuncionarioModel editadoFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
+            try
+            {
+                // Nota para o Léo do Futuro:
+                // AsNoTracking() para resolver o erro de "cannot be tracked because another instance with the same key is already being tracked". 
+                FuncionarioModel funcionario = _context.Funcionarios.AsNoTracking().FirstOrDefault(x => x.Id == editadoFuncionario.Id);
 
-        //        // sensibiliza o bd
-        //        _context.Funcionarios.Update(editadoFuncionario);
-        //        //await _context.SaveChangesAsync();
+                if (funcionario == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Funcionário não encontrado na base de dados";
+                    serviceResponse.Sucesso = false;
+                    return serviceResponse;
+                }
+                
+                serviceResponse.Dados = editadoFuncionario;
+                serviceResponse.Dados.DataDeAlteracao = DateTime.Now.ToLocalTime();
+                serviceResponse.Mensagem = "Dados alterados com sucesso!";
 
-        //        return serviceResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        serviceResponse.Sucesso = false;
-        //        serviceResponse.Mensagem= e.Message;
-        //    }
-        //    return serviceResponse;
-        //}
+                // sensibiliza o bd
+                _context.Funcionarios.Update(editadoFuncionario);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                serviceResponse.Sucesso = false;
+                serviceResponse.Mensagem = e.Message;
+            }
+            return serviceResponse;
+        }
+    
+
+
+        public async Task<ServiceResponseModel<FuncionarioModel>> InativaFuncionario(int idFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
+            try
+            {
+                FuncionarioModel funcionario = _context.Funcionarios.Find(idFuncionario);
+
+                if (funcionario == null)
+                {
+                    serviceResponse.Dados = null;
+                    serviceResponse.Mensagem = "Usuário não encontrado na base de dados";
+                    serviceResponse.Sucesso = false;
+                }
+
+                funcionario.Ativo = false;
+                funcionario.DataDeAlteracao = DateTime.Now.ToLocalTime();
+
+                serviceResponse.Dados = funcionario;
+                serviceResponse.Mensagem = "Funcionário Inativado com sucesso!";
+
+                //sensibiliza o bd
+                _context.Funcionarios.Update(funcionario);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e) 
+            { 
+                serviceResponse.Dados = null;
+                serviceResponse.Sucesso = false;
+                serviceResponse.Mensagem = e.Message;
+            }
+            return serviceResponse;
+        }
 
         public Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario)
         {
@@ -116,10 +162,7 @@ namespace democrud.Service.FuncionarioService
 
         
 
-        public Task<ServiceResponseModel<FuncionarioModel>> InativaFuncionario(int idFuncionario)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         
     }
