@@ -41,6 +41,12 @@ namespace democrud.Service.FuncionarioService
             try
             {
                 serviceResponse.Dados = _context.Funcionarios.Find(idFuncionario);
+                if (serviceResponse.Dados == null)
+                {
+                    serviceResponse.Mensagem = "Funcionário não encontrado";
+                    serviceResponse.Sucesso = false;
+                    return serviceResponse;
+                }
             }
             catch (Exception ex) 
             {
@@ -78,6 +84,29 @@ namespace democrud.Service.FuncionarioService
             return serviceResponse;
         }
 
+        //public async Task<ServiceResponseModel<FuncionarioModel>> UpdateFuncionario(FuncionarioModel editadoFuncionario)
+        //{
+        //    ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
+        //    try
+        //    {
+        //        serviceResponse.Dados = editadoFuncionario;
+        //        serviceResponse.Dados.DataDeAlteracao = DateTime.Now.ToLocalTime();
+        //        serviceResponse.Mensagem = "Dados alterados com sucesso!";
+
+        //        // sensibiliza o bd
+        //        _context.Funcionarios.Update(editadoFuncionario);
+        //        //await _context.SaveChangesAsync();
+
+        //        return serviceResponse;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        serviceResponse.Sucesso = false;
+        //        serviceResponse.Mensagem= e.Message;
+        //    }
+        //    return serviceResponse;
+        //}
+
         public Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario)
         {
             throw new NotImplementedException();
@@ -92,9 +121,6 @@ namespace democrud.Service.FuncionarioService
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResponseModel<FuncionarioModel>> UpdateFuncionario(FuncionarioModel editadoFuncionario)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

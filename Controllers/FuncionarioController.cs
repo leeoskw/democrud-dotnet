@@ -16,10 +16,17 @@ namespace democrud.Controllers
         }
 
         [HttpGet]
-        public  async Task<ActionResult<ServiceResponseModel<List<FuncionarioModel>>>> getallClientes()
+        public  async Task<ActionResult<ServiceResponseModel<List<FuncionarioModel>>>> getAllFuncionarios()
         {
             ServiceResponseModel<List<FuncionarioModel>> funcionarios = await _funcionarioInterface.GetFuncionarios();
             return Ok(funcionarios);
+        }
+
+        [HttpGet("{idFuncionario}")]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> getFuncionarioById([FromRoute] int idFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.GetFuncionarioById(idFuncionario);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -28,8 +35,13 @@ namespace democrud.Controllers
             ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.CreateFuncionario(dados);
             return Ok(response);
         }
- 
 
+        //[HttpPut]
+        //public  async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> UpdateCliente([FromBody] FuncionarioModel dados) 
+        //{
+        //    ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.UpdateFuncionario(dados);
+        //    return Ok(response); 
+        //}
     }
 
     
