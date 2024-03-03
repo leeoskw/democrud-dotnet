@@ -50,8 +50,13 @@ Note: This is a repository to be used as a reference and study. DB Connections, 
 
 | route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /api/funcionario</kbd>     | retrieves 'funcionario' info see [response details](#get-funcionario-detail)
-| <kbd>POST /api/funcionario</kbd>     | create a 'funcionario' into db see [request details](#post-funcionario-detail)
+| <kbd>GET /api/funcionarios</kbd>     | retrieves a list of all 'funcionario' info see [response details](#get-funcionario-detail)
+| <kbd>GET /api/funcionario/{idFuncionario}</kbd>     | retrieves a specific 'funcionario' info see [response details](#get-funcionario-byid-detail)
+| <kbd>POST /api/funcionario</kbd>     | create a 'funcionario' see [request details](#post-funcionario-detail)
+| <kbd>PUT /api/funcionario</kbd>     | update a 'funcionario' see [request details](#update-funcionario-detail)
+| <kbd>PUT /api/funcionario</kbd>     | inativa a 'funcionario' see [request details](#inativa-funcionario-detail)
+| <kbd>DELETE /api/funcionario</kbd>     | delete a 'funcionario' see [request details](#delete-funcionario-detail)
+
 
 <h3 id="get-funcionario-detail">GET /api/funcionario</h3>
 
@@ -72,6 +77,28 @@ Note: This is a repository to be used as a reference and study. DB Connections, 
 	"sucesso": true
 }
 ```
+
+<h3 id="get-funcionario-byid-detail">GET /api/funcionario/{idFuncionario}</h3>
+
+**RESPONSE**
+```json
+{
+	"dados": {
+		"id": 42,
+		"nome": "Lua Another Cat",
+		"sobrenome": "Muuuu",
+		"departamento": 1,
+		"ativo": false,
+		"turno": 2,
+		"dataDeCriacao": "2025-01-03T18:17:48.9702136",
+		"dataDeAlteracao": "2026-07-12T14:12:11.9959941"
+	},
+	"mensagem": "",
+	"sucesso": true
+}
+```
+
+
 
 <h3 id="post-funcionario-detail">POST /api/funcionario</h3>
 
@@ -99,7 +126,78 @@ Note: This is a repository to be used as a reference and study. DB Connections, 
 		"dataDeCriacao": "2024-03-02T20:40:49.4549572-03:00",
 		"dataDeAlteracao": "2024-03-02T20:40:49.4549582-03:00"
 	},
-	"mensagem": "",
+	"mensagem": "Registro criado com sucesso!",
+	"sucesso": true
+}
+```
+<h3 id="update-funcionario-detail">PUT /api/funcionario - Altera um registro</h3>
+
+**REQUEST**
+```json
+{
+	"id" : 2,
+	"nome": "Ellie Just the cat",
+	"sobrenome" : "Miau",
+	"departamento" : 2,
+	"ativo" : true,
+	"turno" : 2
+}
+```
+
+**RESPONSE**
+```json
+{
+	"dados": {
+		"id": 2,
+		"nome": "Ellie Just the cat",
+		"sobrenome": "Miau",
+		"departamento": 2,
+		"ativo": true,
+		"turno": 2,
+		"dataDeCriacao": "2024-03-03T19:19:50.2648681-03:00",
+		"dataDeAlteracao": "2024-03-03T19:19:53.9946721-03:00"
+	},
+	"mensagem": "Dados alterados com sucesso!",
+	"sucesso": true
+}
+```
+
+<h3 id="inativa-funcionario-detail">PUT /api/funcionario/{idFuncionario} - Inativa um registro</h3>
+
+**RESPONSE**
+```json
+{
+	"dados": {
+		"id": 2,
+		"nome": "Ellie The Cat",
+		"sobrenome": "Miau",
+		"departamento": 2,
+		"ativo": false,
+		"turno": 1,
+		"dataDeCriacao": "2024-03-03T18:17:48.9702136",
+		"dataDeAlteracao": "2024-03-03T19:00:31.6391382-03:00"
+	},
+	"mensagem": "Funcionário Inativado com sucesso!",
+	"sucesso": true
+}
+```
+
+<h3 id="delete-funcionario-detail"> DELETE /api/funcionario/{idFuncionario} - Deleta um registro</h3>
+
+**RESPONSE**
+```json
+{
+	"dados": {
+		"id": 2,
+		"nome": "Ellie Just the cat",
+		"sobrenome": "Miau",
+		"departamento": "Compras",
+		"ativo": true,
+		"turno": "Noite",
+		"dataDeCriacao": "2024-03-03T19:19:50.2648681",
+		"dataDeAlteracao": "2024-03-03T19:19:53.9946721"
+	},
+	"mensagem": "Funcionário removido com sucesso!",
 	"sucesso": true
 }
 ```
