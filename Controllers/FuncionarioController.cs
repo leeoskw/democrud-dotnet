@@ -10,13 +10,13 @@ namespace democrud.Controllers
     public class FuncionarioController : ControllerBase
     {
         private readonly IFuncionarioInterface _funcionarioInterface;
-        public FuncionarioController(IFuncionarioInterface funcionarioInterface) 
+        public FuncionarioController(IFuncionarioInterface funcionarioInterface)
         {
             _funcionarioInterface = funcionarioInterface;
         }
 
-        [HttpGet]
-        public  async Task<ActionResult<ServiceResponseModel<List<FuncionarioModel>>>> getAllFuncionarios()
+        [HttpGet("funcionarios")]
+        public async Task<ActionResult<ServiceResponseModel<List<FuncionarioModel>>>> getAllFuncionarios()
         {
             ServiceResponseModel<List<FuncionarioModel>> funcionarios = await _funcionarioInterface.GetFuncionarios();
             return Ok(funcionarios);
@@ -47,6 +47,13 @@ namespace democrud.Controllers
         public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> InativaFuncionario(int idFuncionario)
         {
             ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.InativaFuncionario(idFuncionario);
+            return Ok(response);
+        }
+
+        [HttpDelete("{idFuncionario}")]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> DeleteFuncionario(int idFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.DeleteFuncionario(idFuncionario);
             return Ok(response);
         }
     }

@@ -71,6 +71,8 @@ namespace democrud.Service.FuncionarioService
                     return serviceResponse;
                 }
 
+                serviceResponse.Mensagem = "Registro criado com sucesso!";
+
                 // salva no bd
                 _context.Funcionarios.Add(novoFuncionario);
                 await _context.SaveChangesAsync();
@@ -153,9 +155,34 @@ namespace democrud.Service.FuncionarioService
             return serviceResponse;
         }
 
-        public Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario)
+        public async Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario)
         {
-            throw new NotImplementedException();
+            ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
+            try
+            {
+                FuncionarioModel funcionario = _context.Funcionarios.Find(idFuncionario);
+
+                if (funcionario == null)
+                {
+                    serviceResponse.Mensagem = "Funcionário não encontrado";
+                    serviceResponse.Sucesso = false;
+                    serviceResponse.Dados = null;
+                    return serviceResponse;
+                }
+
+                _context.Funcionarios.Remove(funcionario);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Mensagem = "Funcionário removido com sucesso!";
+                serviceResponse.Dados = funcionario;
+            }
+            catch (Exception e)
+            {
+                serviceResponse.Dados = null;
+                serviceResponse.Sucesso = false;
+                serviceResponse.Mensagem = e.Message;
+            }
+            return serviceResponse;
         }
 
        
