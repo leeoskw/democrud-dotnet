@@ -23,6 +23,11 @@ namespace democrud
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddDbContext<DatabaseFirstCrudDemoContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             // injeção de dependência para a Service ser consumida através do controller
             builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
 
