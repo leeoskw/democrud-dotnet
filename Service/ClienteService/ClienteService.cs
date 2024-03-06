@@ -14,7 +14,8 @@ namespace democrud.Service.ClienteService
 
         public async Task<TbCliente> GetCliente(int id)
         {
-            throw new NotImplementedException();
+            TbCliente cliente = await _context.TbClientes.FindAsync(id);
+            return cliente;
         }
 
         public async Task<TbCliente> CreateCliente(TbCliente cliente)
@@ -24,16 +25,27 @@ namespace democrud.Service.ClienteService
             return cliente;
         }
 
-        public Task<TbCliente> DeleteCliente(int idCliente)
+        public async Task<TbCliente> DeleteCliente(int idCliente)
         {
-            throw new NotImplementedException();
+            TbCliente cliente = _context.TbClientes.Find(idCliente);
+            
+            if (cliente == null)
+            {
+                return null;
+            }
+
+            _context.TbClientes.Remove(cliente);
+            await _context.SaveChangesAsync();
+            return cliente
         }
 
        
 
-        public Task<IEnumerable<TbCliente>> GetClientes()
+        public async Task<IEnumerable<TbCliente>> GetClientes()
         {
-            throw new NotImplementedException();
+            List<TbCliente> clientes = _context.TbClientes.ToList();
+            await _context.SaveChangesAsync();
+            return clientes;
         }
 
         public Task<TbCliente> UpdateCliente(TbCliente cliente)
