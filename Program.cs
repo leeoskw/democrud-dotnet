@@ -1,4 +1,5 @@
 using democrud.DataContext;
+using democrud.Service.ClienteService;
 using democrud.Service.FuncionarioService;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,7 @@ namespace democrud
 
             // injeção de dependência para a Service ser consumida através do controller
             builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
+            builder.Services.AddScoped<IClienteInterface, ClienteService>();
 
             var app = builder.Build();
 

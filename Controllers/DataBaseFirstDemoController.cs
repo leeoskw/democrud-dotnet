@@ -1,7 +1,9 @@
 ﻿using democrud.DataContext;
 using democrud.Models;
-using Microsoft.AspNetCore.Http;
+using democrud.Service.ClienteService;
+using democrud.Service.FuncionarioService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace democrud.Controllers
 {
@@ -9,25 +11,26 @@ namespace democrud.Controllers
     [ApiController]
     public class DataBaseFirstDemoController : ControllerBase
     {
-        private readonly DatabaseFirstCrudDemoContext _context;
+        public readonly IClienteInterface _clienteInterface;
 
-        public DataBaseFirstDemoController(DatabaseFirstCrudDemoContext context)
+        public DataBaseFirstDemoController(IClienteInterface clienteInterface)
         {
-            _context = context;
+            _clienteInterface = clienteInterface;
         }
 
         [HttpGet("clientes")]
-        public IEnumerable<TbCliente> getClientes()
+        public async Task<ActionResult<IEnumerable<TbCliente>>> getClientes()
         {
-            return _context.TbClientes.ToList();
+            var response = await _clienteInterface.GetClientes();
+            return Ok(response);
         }
 
         [HttpPost("clientes")]
-        public ActionResult<TbCliente> CreateCliente([FromBody] TbCliente entity)
+        public async Task<ActionResult<TbCliente>> CreateCliente([FromBody] TbCliente entity)
         {
-            _context.TbClientes.Add(entity);
-            _context.SaveChanges();
-            return Ok(entity);
+            var response = await _clienteInterface.CreateCliente(entity);
+
+            return Ok(response);
         }
     }
 }
