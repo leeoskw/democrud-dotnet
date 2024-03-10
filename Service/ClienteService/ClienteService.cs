@@ -36,7 +36,7 @@ namespace democrud.Service.ClienteService
 
             _context.TbClientes.Remove(cliente);
             await _context.SaveChangesAsync();
-            return cliente
+            return cliente;
         }
 
        

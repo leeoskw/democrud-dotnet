@@ -1,6 +1,8 @@
 using democrud.DataContext;
 using democrud.Service.ClienteService;
+using democrud.Service.Comercio;
 using democrud.Service.FuncionarioService;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 
 namespace democrud
@@ -29,9 +31,29 @@ namespace democrud
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            // configurando o dbcontext para utilizar mysql 
+
+            //builder.Services.AddDbContext<ComercioContext>(options =>
+            //{
+            //    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnectionString"), ServerVersion.AutoDetect("MySqlConnectionString"));
+            //    //Server = myServerAddress; Database = myDataBase; User Id = myUsername; Password = myPassword;
+            //});
+
+
+            builder.Services.AddDbContext<ComercioContext>(options =>
+            {
+                options.UseMySql(builder.Configuration.GetConnectionString("MySqlConnectionString"),
+                                 new MySqlServerVersion(new Version(8, 0, 21))); 
+            });
+
+
+
+
             // injeção de dependência para a Service ser consumida através do controller
             builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
             builder.Services.AddScoped<IClienteInterface, ClienteService>();
+
+            builder.Services.AddScoped<IProdutoInterface, ProdutoService>();
 
             var app = builder.Build();
 
