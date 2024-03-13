@@ -13,6 +13,6 @@ namespace democrud.DataContext
 
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Produto> Produto { get; set; }
-        public DbSet<Venda> Venda { get; set; } 
+        public DbSet<VendaModel> Venda { get; set; } 
     }
 }
