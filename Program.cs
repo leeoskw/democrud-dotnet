@@ -54,6 +54,7 @@ namespace democrud
             builder.Services.AddScoped<IClienteInterface, ClienteService>();
 
             builder.Services.AddScoped<IProdutoInterface, ProdutoService>();
+            builder.Services.AddScoped<IVendaServiceInterface, VendaService>();
 
             var app = builder.Build();
 
