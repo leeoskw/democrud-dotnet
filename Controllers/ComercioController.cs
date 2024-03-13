@@ -11,10 +11,13 @@ namespace democrud.Controllers
     public class ComercioController : ControllerBase
     {
         private readonly IProdutoInterface _produtoInterface;
+        private readonly IVendaServiceInterface _vendaServiceInterface;
 
-        public ComercioController(IProdutoInterface produtoInterface)
+        public ComercioController(IProdutoInterface produtoInterface, IVendaServiceInterface vendaServiceInterface)
         {
             _produtoInterface = produtoInterface;
+            _vendaServiceInterface = vendaServiceInterface;
+
         }
 
 
@@ -28,6 +31,13 @@ namespace democrud.Controllers
         public async Task<ActionResult<Produto>> createProduto([FromBody] Produto produto)
         {
             return await _produtoInterface.CreateProduto(produto);
+        }
+
+        [HttpPost("venda")]
+        public async Task<IActionResult> createVenda([FromBody] VendaModel venda)
+        {
+            await _vendaServiceInterface.CreateVenda(venda);
+            return Ok(venda);
         }
 
     }
