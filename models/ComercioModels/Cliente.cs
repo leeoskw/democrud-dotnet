@@ -6,8 +6,7 @@ namespace democrud.models.ComercioModels
     public class Cliente
     {
         public int id {  get; set; }
-        //[Column("name")]
-        public string name { get; set; }
+        public string nome { get; set; }
         public string email { get; set; }
         public string telefone { get; set; }
     }

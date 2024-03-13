@@ -1,6 +1,6 @@
 ﻿namespace democrud.models.ComercioModels
 {
-    public class Venda
+    public class VendaModel
     {
         public int id { get; set; }
         public int cliente_id {  get; set; }
