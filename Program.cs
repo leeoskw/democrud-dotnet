@@ -1,4 +1,5 @@
 using democrud.DataContext;
+using democrud.Repositories.Funcionario;
 using democrud.Service.ClienteService;
 using democrud.Service.Comercio;
 using democrud.Service.FuncionarioService;
@@ -55,6 +56,7 @@ namespace democrud
 
             builder.Services.AddScoped<IProdutoInterface, ProdutoService>();
             builder.Services.AddScoped<IVendaServiceInterface, VendaService>();
+            builder.Services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();
 
             var app = builder.Build();
 
