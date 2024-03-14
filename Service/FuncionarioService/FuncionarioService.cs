@@ -14,6 +14,51 @@ namespace democrud.Service.FuncionarioService
             _funcionarioRepository = funcionarioRepository;
         }
 
+        public async Task<ServiceResponseModel<List<FuncionarioModel>>> GetFuncionarios()
+        {
+            ServiceResponseModel<List<FuncionarioModel>> serviceResponse = new();
+
+            try
+            {
+                List<FuncionarioModel> funcionarios = await _funcionarioRepository.GetFuncionarios();
+                if (funcionarios == null)
+                {
+                    serviceResponse.Mensagem = "Não há dados cadastrados";
+                }
+                serviceResponse.Dados = funcionarios;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Sucesso = false;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponseModel<FuncionarioModel>> GetFuncionarioById(int idFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> serviceResponse = new();
+            
+            try
+            {
+                var response = await _funcionarioRepository.GetFuncionarioById(idFuncionario);
+                if (response == null)
+                {
+                    serviceResponse.Mensagem = "Usuário não encontrado";
+                    serviceResponse.Sucesso = false;
+                    return serviceResponse;
+                }
+
+                serviceResponse.Dados = response;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Sucesso = false;
+            }
+            return serviceResponse;
+        }
+
         public Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario)
         {
             throw new NotImplementedException();
@@ -24,32 +69,9 @@ namespace democrud.Service.FuncionarioService
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResponseModel<FuncionarioModel>> GetFuncionarioById(int idFuncionario)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public async Task<ServiceResponseModel<List<FuncionarioModel>>> GetFuncionarios()
-        {
-            ServiceResponseModel<List<FuncionarioModel>> serviceResponse = new();
-
-            try
-            {
-                List<FuncionarioModel> funcionarios = await _funcionarioRepository.GetFuncionarios();
-                if (funcionarios == null) 
-                {
-                    serviceResponse.Mensagem = "Não há dados cadastrados";
-                }
-                serviceResponse.Dados = funcionarios;
-            }
-            catch (Exception ex) 
-            { 
-                serviceResponse.Mensagem = ex.Message;
-                serviceResponse.Sucesso = false;
-            }
-            return serviceResponse;
-
-        }
+        
 
         public Task<ServiceResponseModel<FuncionarioModel>> InativaFuncionario(int idFuncionario)
         {

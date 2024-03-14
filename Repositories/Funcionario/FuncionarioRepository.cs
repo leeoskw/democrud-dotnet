@@ -14,6 +14,17 @@ namespace democrud.Repositories.Funcionario
             _context = context;
         }
 
+        public async Task<List<FuncionarioModel>> GetFuncionarios()
+        {
+            return await _context.Funcionarios.ToListAsync();
+        }
+
+        public async Task<FuncionarioModel> GetFuncionarioById(int idFuncionario)
+        {
+            FuncionarioModel? funcionario = await _context.Funcionarios.FindAsync(idFuncionario);
+            return funcionario;
+        }
+
         public Task<FuncionarioModel> CreateFuncionario(FuncionarioModel novoFuncionario)
         {
             throw new NotImplementedException();
@@ -24,15 +35,9 @@ namespace democrud.Repositories.Funcionario
             throw new NotImplementedException();
         }
 
-        public Task<FuncionarioModel> GetFuncionarioById(int idFuncionario)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public async Task<List<FuncionarioModel>> GetFuncionarios()
-        {
-            return await _context.Funcionarios.ToListAsync();
-        }
+        
 
         public Task<FuncionarioModel> InativaFuncionario(int idFuncionario)
         {

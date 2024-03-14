@@ -23,12 +23,12 @@ namespace democrud.Controllers
             return Ok(funcionarios);
         }
 
-        //[HttpGet("{idFuncionario}")]
-        //public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> getFuncionarioById([FromRoute] int idFuncionario)
-        //{
-        //    ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.GetFuncionarioById(idFuncionario);
-        //    return Ok(response);
-        //}
+        [HttpGet("{idFuncionario}")]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> getFuncionarioById([FromRoute] int idFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.GetFuncionarioById(idFuncionario);
+            return Ok(response);
+        }
 
         //[HttpPost]
         //public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> CreateCliente([FromBody] FuncionarioModel dados)
