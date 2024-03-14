@@ -17,7 +17,6 @@ namespace democrud.Service.FuncionarioService
         public async Task<ServiceResponseModel<List<FuncionarioModel>>> GetFuncionarios()
         {
             ServiceResponseModel<List<FuncionarioModel>> serviceResponse = new();
-
             try
             {
                 List<FuncionarioModel> funcionarios = await _funcionarioRepository.GetFuncionarios();
