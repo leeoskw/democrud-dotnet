@@ -1,4 +1,5 @@
 ﻿using democrud.models;
+using democrud.Models;
 using democrud.Repositories.Funcionario;
 using democrud.Service.FuncionarioService;
 using Microsoft.AspNetCore.Http;
@@ -30,12 +31,20 @@ namespace democrud.Controllers
             return Ok(response);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> CreateCliente([FromBody] FuncionarioModel dados)
-        //{
-        //    ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.CreateFuncionario(dados);
-        //    return Ok(response);
-        //}
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> CreateCliente([FromBody] FuncionarioModel dados)
+        {
+            FuncionarioModelValidator validator = new FuncionarioModelValidator();
+            var validationResult = await validator.ValidateAsync(dados);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.Select(erro => erro.ErrorMessage));
+            }
+
+            ServiceResponseModel<FuncionarioModel> response = await _funcionarioInterface.CreateFuncionario(dados);
+            return Ok(response);
+        }
 
         //[HttpPut]
         //public async Task<ActionResult<ServiceResponseModel<FuncionarioModel>>> UpdateCliente([FromBody] FuncionarioModel dados)

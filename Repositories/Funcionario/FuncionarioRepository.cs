@@ -25,9 +25,11 @@ namespace democrud.Repositories.Funcionario
             return funcionario;
         }
 
-        public Task<FuncionarioModel> CreateFuncionario(FuncionarioModel novoFuncionario)
+        public async Task<FuncionarioModel> CreateFuncionario(FuncionarioModel novoFuncionario)
         {
-            throw new NotImplementedException();
+            _context.Funcionarios.Add(novoFuncionario);
+            await _context.SaveChangesAsync();
+            return novoFuncionario;
         }
 
         public Task<FuncionarioModel> DeleteFuncionario(int idFuncionario)

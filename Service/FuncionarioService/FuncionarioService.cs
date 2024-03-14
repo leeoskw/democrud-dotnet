@@ -59,10 +59,7 @@ namespace democrud.Service.FuncionarioService
             return serviceResponse;
         }
 
-        public Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public Task<ServiceResponseModel<FuncionarioModel>> DeleteFuncionario(int idFuncionario)
         {
@@ -83,57 +80,24 @@ namespace democrud.Service.FuncionarioService
             throw new NotImplementedException();
         }
 
-        //public async Task<ServiceResponseModel<FuncionarioModel>> GetFuncionarioById(int idFuncionario)
-        //{
-        //    ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
 
-        //    try
-        //    {
-        //        serviceResponse.Dados = _context.Funcionarios.Find(idFuncionario);
-        //        if (serviceResponse.Dados == null)
-        //        {
-        //            serviceResponse.Mensagem = "Funcionário não encontrado";
-        //            serviceResponse.Sucesso = false;
-        //            return serviceResponse;
-        //        }
-        //    }
-        //    catch (Exception ex) 
-        //    {
-        //        serviceResponse.Mensagem = ex.Message;
-        //        serviceResponse.Sucesso = false;
-        //    }
-        //    return serviceResponse;
+        public async Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario)
+        {
+            ServiceResponseModel<FuncionarioModel> serviceResponse = new();
+            try
+            { 
+                await _funcionarioRepository.CreateFuncionario(novoFuncionario);
+                serviceResponse.Mensagem = "Registro criado com sucesso!";
+                serviceResponse.Dados = novoFuncionario;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Mensagem = ex.Message;
+                serviceResponse.Sucesso = false;
+            }
+            return serviceResponse;
+        }
 
-        //}
-
-        //public async Task<ServiceResponseModel<FuncionarioModel>> CreateFuncionario(FuncionarioModel novoFuncionario)
-        //{
-        //    ServiceResponseModel<FuncionarioModel> serviceResponse = new ServiceResponseModel<FuncionarioModel>();
-        //    try
-        //    {
-        //        if (novoFuncionario == null)
-        //        {
-        //            serviceResponse.Dados = null;
-        //            serviceResponse.Mensagem = "Dados inválidos";
-        //            serviceResponse.Sucesso = false;
-        //            return serviceResponse;
-        //        }
-
-        //        serviceResponse.Mensagem = "Registro criado com sucesso!";
-
-        //        // salva no bd
-        //        _context.Funcionarios.Add(novoFuncionario);
-        //        await _context.SaveChangesAsync();
-
-        //        serviceResponse.Dados = novoFuncionario;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        serviceResponse.Mensagem = ex.Message;
-        //        serviceResponse.Sucesso = false;
-        //    }
-        //    return serviceResponse;
-        //}
 
         //public async Task<ServiceResponseModel<FuncionarioModel>> UpdateFuncionario(FuncionarioModel editadoFuncionario)
         //{
